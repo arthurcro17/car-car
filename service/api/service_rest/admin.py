@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import AutoVO, Technician, ServiceAppointment
+from .models import AutoVO, Technician, Service
 
 # Register your models here.
 @admin.register(AutoVO)
@@ -10,6 +10,6 @@ class AutoVOAdmin(admin.ModelAdmin):
 class TechnicianAdmin(admin.ModelAdmin):
     pass
 
-@admin.register(ServiceAppointment)
-class ServiceAppointment(admin.ModelAdmin):
+@admin.register(Service)
+class ServiceAdmin(admin.ModelAdmin):
     pass

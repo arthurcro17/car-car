@@ -16,11 +16,11 @@ class Technician(models.Model):
 class AutoVO(models.Model):
     vin = models.PositiveIntegerField()
 
-class ServiceAppointment(models.Model):
+class Service(models.Model):
     vin = models.PositiveIntegerField()
     owner = models.CharField(max_length=100)
     date = models.DateTimeField()
-    technician = models.ForeignKey(Technician, related_name='appointments', on_delete=models.DO_NOTHING)
+    technician = models.ForeignKey(Technician, related_name='services', on_delete=models.DO_NOTHING)
     reason = models.CharField(max_length=200)
     status = models.CharField(max_length=9, choices=[("Pending", 'Pending'), ('Finished', 'Finished'), ('Canceled', 'Canceled')], default='Pending')
     vip = models.BooleanField(default=False)
