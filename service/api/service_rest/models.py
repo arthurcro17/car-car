@@ -23,6 +23,7 @@ class ServiceAppointment(models.Model):
     technician = models.ForeignKey(Technician, related_name='appointments', on_delete=models.DO_NOTHING)
     reason = models.CharField(max_length=200)
     status = models.CharField(max_length=9, choices=[("Pending", 'Pending'), ('Finished', 'Finished'), ('Canceled', 'Canceled')], default='Pending')
+    vip = models.BooleanField(default=False)
 
     # def get_api_url(self):
     #     return reverse("api_service", kwargs={"pk": self.pk})
