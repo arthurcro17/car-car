@@ -4,7 +4,7 @@ from django.views.decorators.http import require_http_methods
 import json
 from django.shortcuts import render
 from .encoders import SalesPersonEncoder, CustomerEncoder, SaleRecordEncoder
-from .models import SalesPerson, Customer, SaleRecord
+from .models import AutomobileVO, SalesPerson, Customer, SaleRecord
 
 
 # Create your views here.
@@ -155,14 +155,26 @@ def api_sale_records(request):
             encoder=SaleRecordEncoder
         )
     else:
+        # content = json.loads(request.body)
+        # print(request.body)
         try:
             content = json.loads(request.body)
-            customer_id = content["customer"]
-            customer = SaleRecord.objects.get(pk=customer_id)
-            content["customer"] = customer
-            sale_person_id = content["sales_person"]
-            sale_person = SaleRecord.objects.get(pk=sale_person_id)
+
+            # employee info
+            employee = content["sale_person"]
+            sale_person = SalesPerson.objects.get(employee_number=employee)
             content["sale_person"] = sale_person
+
+            # customer info
+            customer_id = content["customer"]
+            customer = Customer.objects.get(pk=customer_id)
+            content["customer"] = customer
+
+            # auto info
+            autovin = content["automobile"]
+            automobiles = AutomobileVO.objects.all()
+            automobile = AutomobileVO.objects.get(vin=autovin)
+            content["automobile"] = automobile
             sale_records = SaleRecord.objects.create(**content)
             return JsonResponse(
                 sale_records,
