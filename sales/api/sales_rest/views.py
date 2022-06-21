@@ -170,7 +170,7 @@ def api_sale_records(request):
 
             # auto info
             autovin = content["automobile"]
-            automobile = AutomobileVO.objects.get(vin=autovin)
+            automobile = AutomobileVO.objects.get(id=autovin)
             content["automobile"] = automobile
             sale_records = SaleRecord.objects.create(**content)
             return JsonResponse(
@@ -215,11 +215,15 @@ def api_sale_record(request, pk):
         content = json.loads(request.body)
         try:
             content = json.loads(request.body)
+            print("this is the content: ", content)
+            print("this is the pk: ", pk)
             sale_record = SaleRecord.objects.get(id=pk)
+            print("ONE RECORD: ", sale_record)
+            print("SALE RECORD: ", sale_record.id, sale_record.customer)
             SaleRecord.objects.filter(id=pk).update(**content)
             return JsonResponse(
                 sale_record,
-                encoder=SaleRecord,
+                encoder=SaleRecordEncoder,
                 safe=False,
             )
         except SaleRecord.DoesNotExist:

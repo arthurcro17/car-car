@@ -38,7 +38,7 @@ class SaleRecord(models.Model):
     sales_price=models.PositiveIntegerField()
     automobile = models.ForeignKey(
         AutomobileVO,
-        related_name="automobile",
+        related_name="automobiles",
         on_delete=models.CASCADE,
     )
     customer = models.ForeignKey(
@@ -51,6 +51,9 @@ class SaleRecord(models.Model):
         related_name="sale_person",
         on_delete=models.PROTECT,
     )
+    def get_api_url(self):
+        return reverse("api_customer", kwargs={"pk": self.id})
+    
 
 
 # class State(models.Model):
