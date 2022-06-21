@@ -3,8 +3,8 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 import json
 from django.shortcuts import render
-from .encoders import SalesPersonEncoder, CustomerEncoder
-from .models import SalesPerson, Customer
+from .encoders import SalesPersonEncoder, CustomerEncoder, SaleRecordEncoder
+from .models import SalesPerson, Customer, SaleRecord
 
 
 # Create your views here.
@@ -142,5 +142,78 @@ def api_customer(request, pk):
             )
         except Customer.DoesNotExist:
             response = JsonResponse({"message": "Does not exist"})
+            response.status_code = 404
+            return response
+
+
+@require_http_methods(["GET", "POST"])
+def api_sale_records(request):
+    if request.method == "GET":
+        sale_records = SaleRecord.objects.all()
+        return JsonResponse(
+            {"sale_records": sale_records},
+            encoder=SaleRecordEncoder
+        )
+    else:
+        try:
+            content = json.loads(request.body)
+            customer_id = content["customer"]
+            customer = SaleRecord.objects.get(pk=customer_id)
+            content["customer"] = customer
+            sale_person_id = content["sales_person"]
+            sale_person = SaleRecord.objects.get(pk=sale_person_id)
+            content["sale_person"] = sale_person
+            sale_records = SaleRecord.objects.create(**content)
+            return JsonResponse(
+                sale_records,
+                encoder=SaleRecordEncoder,
+                safe=False,
+            )
+        except:
+            response = JsonResponse(
+                {"message": "Could not create the sale record"}
+            )
+            response.status_code = 400
+            return response
+
+
+@require_http_methods(["DELETE", "GET", "PUT"])
+def api_sale_record(request, pk):
+    if request.method == "GET":
+        try:
+            sale_record = SaleRecord.objects.get(id=pk)
+            return JsonResponse(
+                sale_record,
+                encoder=SaleRecordEncoder,
+                safe=False
+            )
+        except SaleRecord.DoesNotExist:
+            response = JsonResponse({"message": "Sale record does not exist"})
+            response.status_code = 404
+            return response
+    elif request.method == "DELETE":
+        try:
+            sale_record = SaleRecord.objects.get(id=pk)
+            sale_record.delete()
+            return JsonResponse(
+                sale_record,
+                encoder=SaleRecordEncoder,
+                safe=False,
+            )
+        except SaleRecord.DoesNotExist:
+            return JsonResponse({"message": "Sale record does not exist"})
+    else: # PUT
+        content = json.loads(request.body)
+        try:
+            content = json.loads(request.body)
+            sale_record = SaleRecord.objects.get(id=pk)
+            SaleRecord.objects.filter(id=pk).update(**content)
+            return JsonResponse(
+                sale_record,
+                encoder=SaleRecord,
+                safe=False,
+            )
+        except SaleRecord.DoesNotExist:
+            response = JsonResponse({"message": "Sale record does not exist"})
             response.status_code = 404
             return response
