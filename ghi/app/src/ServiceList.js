@@ -1,12 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-
 class ServiceListPage extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      serviceColumns: [[], [], []],
+      services: [],
     }
   }
 
@@ -22,57 +21,38 @@ class ServiceListPage extends React.Component {
     console.log('after')
     if (response.ok) {
         console.log('ok response')
-        const columns = this.state.serviceColumns.map(column => column.filter(function(service) {
+        const new_services = this.state.services.filter(function(service) {
             return service.id !== id
-        }))
-        console.log(columns)
-        this.setState({serviceColumns: columns})
+        })
+
+        this.setState({services: new_services})
         console.log('set the state')
     }
   }}
 
   vipCheck(check) {
     if (check) {
-      return "card mb-3 shadow border border-success border-3"
+      return (
+        <td>VIP</td>
+      )
     }
     else {
-      return "card mb-3 shadow"
+      return <td></td>
     }
   }
+
 
   async componentDidMount() {
     const url = 'http://localhost:8080/api/services/'
     try {
       const response = await fetch(url)
       if (response.ok) {
-
         const data = await response.json()
-
-        const requests = [];
-        for (let service of data.services) {
-          const detailUrl = `http://localhost:8080/api/services/${service.id}/`
-          requests.push(fetch(detailUrl))
-        }
-        const responses = await Promise.all(requests)
-
-        const serviceColumns = [[], [], []];
-
-        let i = 0
-        for (const serviceResponse of responses) {
-          if (serviceResponse.ok) {
-            const details = await serviceResponse.json()
-            serviceColumns[i].push(details)
-            i = i + 1
-            if (i > 2) {
-              i = 0
-            }
-          } else {
-            console.error(serviceResponse)
-          }
-        }
-        this.setState({serviceColumns: serviceColumns})
+        this.setState({services: data.services})
+        console.log(this.state)
       }
-    } catch (e) {
+    } 
+    catch (e) {
       console.error(e)
     }
   }
@@ -96,30 +76,47 @@ class ServiceListPage extends React.Component {
         <div className="container">
           <h2>Pending services</h2>
           <div className="row">
-            {this.state.serviceColumns.map((list, key) => {
-              return (
-                <div className="col" key={key}>
-                {list.map(service => {
-                  return (
-                    <div key={service.id} className={this.vipCheck(service.vip)}>
-                      <div className="card-body">
-                        <h5 className="card-text">VIN: {service.vin}</h5>
-                        <h5 className="card-text">Owner: {service.owner}</h5>
-                        <h5 className="card-text">Reason: {service.reason}</h5>
-                        <h5 className="card-text">Date: {service.date}</h5>
-                        <h5 className="card-text">Technician: {service.technician.name}</h5>
-                        <h5 className="card-text">Status: {service.status}</h5>
-                      </div>
-                      <button className="btn btn-primary btn-lg px-4 gap-3" onClick={e => this.onChange(e, service.id, 'Finished')}>Finish</button>
-                      <button className="btn btn-secondary btn-lg px-4 gap-3" onClick={e => this.onChange(e, service.id, 'Cancelled')}>Cancel</button>
+            <table className='table table-striped'>
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>VIN</th>
+                  <th>Customer Name</th>
+                  <th>Date</th>
+                  <th>Time</th>
+                  <th>Technician</th>
+                  <th>Reason</th>
+                  <th>Status</th>
+                  <th>VIP</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {this.state.services.map(service => {
+                    return (
                       
-                    </div>
-                  )
+                
+                      <tr key={service.id}>
+                        <td>
+                          <button className="btn btn-primary btn-lg px-4 gap-3" onClick={e => this.onChange(e,service.id, 'Finished')}>Finish</button>
+                        </td>
+                        <td>{service.vin}</td>
+                        <td>{service.owner}</td>
+                        <td>{service.date}</td>
+                        <td>{service.date}</td>
+                        <td>{service.technician.name}</td>
+                        <td>{service.reason}</td>
+                        <td>{service.status}</td>
+                        {this.vipCheck(service.vip)}
+                        <td>
+                          <button className="btn btn-secondary btn-lg px-4 gap-3" onClick={e => this.onChange(e,service.id, 'Cancelled')}>Cancel</button>
+                        </td>
+                      </tr> 
+                      
+                    )
                 })}
-                </div>
-              )
-            })}
-            
+              </tbody>
+            </table>            
           </div>
         </div>
       </>

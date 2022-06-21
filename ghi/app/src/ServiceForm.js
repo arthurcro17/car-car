@@ -3,16 +3,26 @@ import React from "react";
 class ServiceForm extends React.Component {
     constructor(props){
         super(props);
+        let today = new Date()
+        let yyyy = today.getFullYear()
+        let mm = today.getMonth()+1
+        let dd = today.getDate()
+        if (dd < 10) {dd = '0' + dd}
+        if (mm < 10) {mm = '0' + mm}
+        today = yyyy + '-' +  mm + '-' + dd
+
         this.state = {
             owner: '',
             vin: '',
-            date: '',
+            date: today,
+            time: '',
             technicians: [],
             reason: '',
         };
         this.handleOwnerChange = this.handleOwnerChange.bind(this);
         this.handleVinChange = this.handleVinChange.bind(this);
         this.handleDateChange = this.handleDateChange.bind(this);
+        this.handleTimeChange = this.handleTimeChange.bind(this);
         this.handleTechnicianChange = this.handleTechnicianChange.bind(this);
         this.handleReasonChange = this.handleReasonChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -68,6 +78,11 @@ class ServiceForm extends React.Component {
         this.setState({date: value});
     }
 
+    handleTimeChange(event) {
+        const value = event.target.value;
+        this.setState({time: value});
+    }
+
     handleTechnicianChange(event) {
         const value = event.target.value;
         this.setState({technician: value});
@@ -103,9 +118,13 @@ class ServiceForm extends React.Component {
                             <input onChange={this.handleVinChange} value={this.state.vin} placeholder="Vin" required type="text" name="vin" id="vin" className="form-control"/>
                             <label htmlFor="vin">Vin</label>
                         </div>
-                        <div className="form-floating mb-3">
-                            <input onChange={this.handleDateChange} value={this.state.date} placeholder="Date" required type="text" name="date" id="date" className="form-control"/>
+                        <div className="form-floating mb-3 datepicker">
+                            <input onChange={this.handleDateChange} value={this.state.date} placeholder="Date" required type="date" name="date" id="date" className="form-control"/>
                             <label htmlFor="date">Date</label>
+                        </div>
+                        <div className="form-floating mb-3 timepicker">
+                            <input onChange={this.handleTimeChange} value={this.state.time} placeholder="Time" required type="time" name="time" id="time" className="form-control"/>
+                            <label htmlFor="time">Time</label>
                         </div>
                         <div className="form-floating mb-3">
                             <input onChange={this.handleReasonChange} value={this.state.reason} placeholder="Reason" required type="url" name="reason" id="reason" className="form-control"/>
@@ -114,10 +133,10 @@ class ServiceForm extends React.Component {
                         <div className="mb-3">
                             <select onChange={this.handleTechnicianChange} value={this.state.technician} required name="technician" id="technician" className="form-select">
                                 <option value="">Technician</option>
-                                {this.state.technicians.map(bin => {
+                                {this.state.technicians.map(technician => {
                                     return (
-                                    <option key={technician.id} value={technician.id}>
-                                        {technician.name}-{technician.id}
+                                    <option key={technician.employee_number} value={technician.employee_number}>
+                                        {technician.name}-{technician.employee_number}
                                     </option>
                                     );
                                 })}

@@ -58,7 +58,6 @@ def api_list_technicians(request):
 @require_http_methods(['GET', 'POST'])
 def api_list_services(request, vin=None):
     if request.method == 'GET':
-        print(vin)
         if vin is not None:
             services = Service.objects.filter(vin=vin)
         else:
@@ -100,21 +99,14 @@ def api_update_service(request, pk):
         )
 
     else:
-        print('YOU GOT TO THE VIEW')
-        print(pk)
-        print(request.body)
         content = json.loads(request.body)
-        print('YOU DEFINED THE CONTENT AS: ', content)
         try:
             service = Service.objects.get(id=pk)
         except Service.DoesNotExist:
             return JsonResponse({"Message": "Invalid service ID"})
-
         if 'status' in content:
-            print(content['status'])
             Service.objects.filter(id=pk).update(status=content['status'])
             updated_service = Service.objects.filter(id=pk)
-            print(updated_service)
             return JsonResponse(
                 updated_service,
                 encoder = ServiceEncoder,

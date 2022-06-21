@@ -3,6 +3,7 @@ import MainPage from './MainPage';
 import Nav from './Nav';
 import ServiceHistoryPage from './ServiceHistory';
 import ServiceListPage from './ServiceList';
+import ServiceForm from './ServiceForm';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           <Route path="/" element={<MainPage />} />
           <Route path='services'>
             <Route path='' element={<ServiceListPage />} />
+            <Route path='new' element={<ServiceForm />} />
             <Route path='history' element={<ServiceHistoryPage />} />
           </Route>
         </Routes>
