@@ -35,7 +35,7 @@ class AutomobileVO(models.Model):
 
 
 class SaleRecord(models.Model):
-    sales_price=models.DecimalField(max_digits=8, decimal_places=2)
+    sales_price=models.PositiveIntegerField()
     automobile = models.ForeignKey(
         AutomobileVO,
         related_name="automobile",

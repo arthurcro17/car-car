@@ -155,8 +155,6 @@ def api_sale_records(request):
             encoder=SaleRecordEncoder
         )
     else:
-        # content = json.loads(request.body)
-        # print(request.body)
         try:
             content = json.loads(request.body)
 
@@ -172,7 +170,6 @@ def api_sale_records(request):
 
             # auto info
             autovin = content["automobile"]
-            automobiles = AutomobileVO.objects.all()
             automobile = AutomobileVO.objects.get(vin=autovin)
             content["automobile"] = automobile
             sale_records = SaleRecord.objects.create(**content)
