@@ -17,7 +17,6 @@ class TechnicianForm extends React.Component {
     async handleSubmit(event) {
         event.preventDefault();
         const data = {...this.state}
-        delete data.error_message
         const servicesUrl = 'http://localhost:8080/api/services/technicians/'
         const fetchConfig = {
             method: "POST",

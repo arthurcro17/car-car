@@ -59,7 +59,12 @@ def api_list_technicians(request):
 def api_list_services(request, vin=None):
     if request.method == 'GET':
         if vin is not None:
-            services = Service.objects.filter(vin=vin)
+            try:
+                services = Service.objects.filter(vin=vin)
+            except Service.DoesNotExist:
+                return JsonResponse(
+                    {'message': 'Invalid VIN'}
+                )
         else:
             services = Service.objects.filter(status='Pending')
             print(services)

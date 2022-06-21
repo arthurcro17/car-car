@@ -29,7 +29,7 @@ class ServiceHistoryPage extends React.Component {
   async handleSubmit(event) {
     event.preventDefault()
     const data = {...this.state}
-    let serviceUrl = `http://localhost:8080/api/services/${data.vin}`
+    let serviceUrl = `http://localhost:8080/api/services/history/${data.vin}`
     try {
         const response = await fetch(serviceUrl)
         if (response.ok) {
@@ -39,6 +39,7 @@ class ServiceHistoryPage extends React.Component {
         }
     }
     catch (e) {
+        console.log('errrrrr')
         console.error(e)
     }
   }

@@ -31,7 +31,7 @@ class ServiceHistory2Page extends React.Component {
     event.preventDefault()
 
     console.log(this.state.vin)
-    let serviceUrl = `http://localhost:8080/api/services/${this.state.vin}`
+    let serviceUrl = `http://localhost:8080/api/services/history/${this.state.vin}`
     try {
         const response = await fetch(serviceUrl)
         if (response.ok) {
