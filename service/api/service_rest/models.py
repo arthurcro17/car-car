@@ -17,12 +17,12 @@ class AutoVO(models.Model):
     vin = models.PositiveIntegerField()
 
 class Service(models.Model):
-    vin = models.PositiveIntegerField()
+    vin = models.CharField(max_length=17)
     owner = models.CharField(max_length=100)
     date = models.DateTimeField()
     technician = models.ForeignKey(Technician, related_name='services', on_delete=models.DO_NOTHING)
     reason = models.CharField(max_length=200)
-    status = models.CharField(max_length=9, choices=[("Pending", 'Pending'), ('Finished', 'Finished'), ('Canceled', 'Canceled')], default='Pending')
+    status = models.CharField(max_length=9, choices=[("Pending", 'Pending'), ('Finished', 'Finished'), ('Cancelled', 'Cancelled')], default='Pending')
     vip = models.BooleanField(default=False)
 
     # def get_api_url(self):

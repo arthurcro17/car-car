@@ -11,14 +11,15 @@ class ServiceListPage extends React.Component {
   }
 
   async onChange(event, id, change) {
-    if(window.confirm(`Are you sure you want to change this appointment statsus to ${change}?`)){
-      const serviceUrl = `http://localhost:8080/api/services/${id}`
+    if(window.confirm(`Are you sure you want to change this appointment status to ${change}?`)){
+      const serviceUrl = `http://localhost:8080/api/services/${id}/`
       const fetchConfig = {
         method: "PUT",
-        body: {'status': change}
+        body: JSON.stringify({'status': change})
     }
+    console.log('before')
     const response = await fetch(serviceUrl, fetchConfig)
-
+    console.log('after')
     if (response.ok) {
         console.log('ok response')
         const columns = this.state.serviceColumns.map(column => column.filter(function(service) {
@@ -30,6 +31,14 @@ class ServiceListPage extends React.Component {
     }
   }}
 
+  vipCheck(check) {
+    if (check) {
+      return "card mb-3 shadow border border-success border-3"
+    }
+    else {
+      return "card mb-3 shadow"
+    }
+  }
 
   async componentDidMount() {
     const url = 'http://localhost:8080/api/services/'
@@ -61,7 +70,6 @@ class ServiceListPage extends React.Component {
             console.error(serviceResponse)
           }
         }
-
         this.setState({serviceColumns: serviceColumns})
       }
     } catch (e) {
@@ -80,7 +88,8 @@ class ServiceListPage extends React.Component {
                 Here are all of the pending services!
             </p>
             <div className="d-grid gap-2 d-sm-flex justify-content-sm-center">
-              <Link to="/hats/new" className="btn btn-primary btn-lg px-4 gap-3">Add a new service!</Link>
+              <Link to="/services/new" className="btn btn-primary btn-lg px-4 gap-3">Add a new service</Link>
+              <Link to="/services/history" className="btn btn-primary btn-lg px-4 gap-3">Vehicle History</Link>
             </div>
           </div>
         </div>
@@ -92,8 +101,7 @@ class ServiceListPage extends React.Component {
                 <div className="col" key={key}>
                 {list.map(service => {
                   return (
-                    <div key={service.id} className="card mb-3 shadow">
-                      {/* <img src={service.} className="card-img-top" /> */}
+                    <div key={service.id} className={this.vipCheck(service.vip)}>
                       <div className="card-body">
                         <h5 className="card-text">VIN: {service.vin}</h5>
                         <h5 className="card-text">Owner: {service.owner}</h5>
@@ -102,13 +110,9 @@ class ServiceListPage extends React.Component {
                         <h5 className="card-text">Technician: {service.technician.name}</h5>
                         <h5 className="card-text">Status: {service.status}</h5>
                       </div>
-                      <div className="card-footer">
-                          <h5>Location</h5>
-                          <h6>Closet Name: {hat.location.closet_name}</h6>
-                          <h6>Section Number: {hat.location.section_number}</h6>
-                          <h6>Shelf Number: {hat.location.shelf_number}</h6>
-                      </div>
-                      <button className="btn btn-primary btn-lg px-4 gap-3" onClick={e => this.onDelete(e,hat.id)}>Remove this hat</button>
+                      <button className="btn btn-primary btn-lg px-4 gap-3" onClick={e => this.onChange(e, service.id, 'Finished')}>Finish</button>
+                      <button className="btn btn-secondary btn-lg px-4 gap-3" onClick={e => this.onChange(e, service.id, 'Cancelled')}>Cancel</button>
+                      
                     </div>
                   )
                 })}
@@ -123,4 +127,4 @@ class ServiceListPage extends React.Component {
   }
 }
 
-export default MainPage
+export default ServiceListPage

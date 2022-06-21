@@ -38,7 +38,6 @@ class ServiceEncoder(ModelEncoder):
 def api_list_technicians(request):
     if request.method == 'GET':
         technicians = Technician.objects.all()
-        print('HERE ARE THE TECHS', technicians)
         return JsonResponse(
             {"technicians": technicians},
             encoder = TechnicianEncoder,
@@ -47,9 +46,7 @@ def api_list_technicians(request):
         content = json.loads(request.body)
         try:
             technician = Technician.objects.create(**content)
-            print('created tech')
         except IntegrityError:
-            print('except triggered')
             return JsonResponse({'message': 'Number already in use'})
         return JsonResponse(
             technician,
@@ -61,11 +58,11 @@ def api_list_technicians(request):
 @require_http_methods(['GET', 'POST'])
 def api_list_services(request, vin=None):
     if request.method == 'GET':
+        print(vin)
         if vin is not None:
             services = Service.objects.filter(vin=vin)
         else:
-            services = Service.objects.all()
-        print('HERE ARE THE APPS', services)
+            services = Service.objects.filter(status='Pending')
         return JsonResponse(
             {'services': services},
             encoder=ServiceEncoder
@@ -81,9 +78,9 @@ def api_list_services(request, vin=None):
                 {'message': 'Invalid technician ID'},
                 status=400
             )
-        if content['vin'] in [car['vin'] for car in AutoVO.objects.all()]:
+ 
+        if AutoVO.objects.filter(vin=content['vin']):
             content['vip'] = True
-        print(content)
         service = Service.objects.create(**content)
         return JsonResponse(
             service,
@@ -92,20 +89,34 @@ def api_list_services(request, vin=None):
         )
 
 
-@require_http_methods("PUT")
+@require_http_methods(["GET", "PUT"])
 def api_update_service(request, pk):
-    content = json.loads(request.body)
-
-    try:
+    if request.method == 'GET':
         service = Service.objects.get(id=pk)
-    except Service.DoesNotExist:
-        return JsonResponse({"Message": "Invalid service ID"})
-
-    if 'status' in content:
-        Service.objects.filter(id=pk).update(status=content['status'])
-        updated_service = Service.objects.filter(id=pk)
         return JsonResponse(
-            updated_service,
+            service,
             encoder = ServiceEncoder,
-            safe = False
-            )
+            safe=False
+        )
+
+    else:
+        print('YOU GOT TO THE VIEW')
+        print(pk)
+        print(request.body)
+        content = json.loads(request.body)
+        print('YOU DEFINED THE CONTENT AS: ', content)
+        try:
+            service = Service.objects.get(id=pk)
+        except Service.DoesNotExist:
+            return JsonResponse({"Message": "Invalid service ID"})
+
+        if 'status' in content:
+            print(content['status'])
+            Service.objects.filter(id=pk).update(status=content['status'])
+            updated_service = Service.objects.filter(id=pk)
+            print(updated_service)
+            return JsonResponse(
+                updated_service,
+                encoder = ServiceEncoder,
+                safe = False
+                )
