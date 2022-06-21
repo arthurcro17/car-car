@@ -1,5 +1,6 @@
 import React from "react";
 
+
 class ServiceForm extends React.Component {
     constructor(props){
         super(props);
@@ -31,14 +32,19 @@ class ServiceForm extends React.Component {
     async handleSubmit(event) {
         event.preventDefault();
         const data = {...this.state}
-        data.model_name = data.modelName;
-        data.picture_url = data.pictureUrl;
-        delete data.modelName;
-        delete data.pictureUrl;
-        delete data.bins;
-        //delete data.modelName;
+        delete data.technicians;
         console.log("checking submit data: ", data);
-        const shoesUrl = 'http://localhost:8080/api/shoes/'
+        console.log(typeof data.date)
+        let year = data.date.slice(0,4)
+        let month = data.date.slice(5,7)
+        let day = data.date.slice(8-10)
+        let hour = data.time.slice(0,2)
+        let minute = data.time.slice(3)
+        let formated_date = new Date(Date.UTC(year, month, day, hour, minute))
+        console.log(formated_date)
+        data['date'] = formated_date
+        delete data.time
+        const servicesUrl = 'http://localhost:8080/api/services/'
         const fetchConfig = {
             method: "POST",
             body: JSON.stringify(data),
@@ -46,11 +52,10 @@ class ServiceForm extends React.Component {
                 'Content-Type': 'application/json',
             },
         };
-        console.log("shoesURL: ", shoesUrl, "fetchConfig: ", fetchConfig)
-        const response = await fetch(shoesUrl, fetchConfig);
+        const response = await fetch(servicesUrl, fetchConfig);
         if (response.ok) {
-            const newShoes = await response.json();
-            console.log(newShoes);
+            const newServices = await response.json();
+            console.log(newServices);
 
             const cleared = {
                 owner: '',
@@ -127,7 +132,7 @@ class ServiceForm extends React.Component {
                             <label htmlFor="time">Time</label>
                         </div>
                         <div className="form-floating mb-3">
-                            <input onChange={this.handleReasonChange} value={this.state.reason} placeholder="Reason" required type="url" name="reason" id="reason" className="form-control"/>
+                            <input onChange={this.handleReasonChange} value={this.state.reason} placeholder="Reason" required type="text" name="reason" id="reason" className="form-control"/>
                             <label htmlFor="reason">Reason</label>
                         </div>
                         <div className="mb-3">

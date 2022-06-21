@@ -11,7 +11,7 @@ class ServiceListPage extends React.Component {
 
   async onChange(event, id, change) {
     if(window.confirm(`Are you sure you want to change this appointment status to ${change}?`)){
-      const serviceUrl = `http://localhost:8080/api/services/${id}/`
+      const serviceUrl = `http://localhost:8080/api/services/${id}`
       const fetchConfig = {
         method: "PUT",
         body: JSON.stringify({'status': change})
@@ -70,6 +70,7 @@ class ServiceListPage extends React.Component {
             <div className="d-grid gap-2 d-sm-flex justify-content-sm-center">
               <Link to="/services/new" className="btn btn-primary btn-lg px-4 gap-3">Add a new service</Link>
               <Link to="/services/history" className="btn btn-primary btn-lg px-4 gap-3">Vehicle History</Link>
+              <Link to="/services/technicians/new" className="btn btn-primary btn-lg px-4 gap-3">Create a new Technician</Link>
             </div>
           </div>
         </div>
@@ -102,8 +103,8 @@ class ServiceListPage extends React.Component {
                         </td>
                         <td>{service.vin}</td>
                         <td>{service.owner}</td>
-                        <td>{service.date}</td>
-                        <td>{service.date}</td>
+                        <td>{service.date.slice(0,10)}</td>
+                        <td>{service.date.slice(11,16)}</td>
                         <td>{service.technician.name}</td>
                         <td>{service.reason}</td>
                         <td>{service.status}</td>

@@ -1,5 +1,6 @@
 from django.urls import reverse
 from django.db import models
+from datetime import datetime
 
 # Create your models here.
 
@@ -14,12 +15,12 @@ class Technician(models.Model):
         return reverse("api_technician", kwargs={"pk": self.employee_number})
 
 class AutoVO(models.Model):
-    vin = models.PositiveIntegerField()
+    vin = models.CharField(max_length=17)
 
 class Service(models.Model):
     vin = models.CharField(max_length=17)
     owner = models.CharField(max_length=100)
-    date = models.DateTimeField()
+    date = models.DateTimeField(default=datetime.now)
     technician = models.ForeignKey(Technician, related_name='services', on_delete=models.DO_NOTHING)
     reason = models.CharField(max_length=200)
     status = models.CharField(max_length=9, choices=[("Pending", 'Pending'), ('Finished', 'Finished'), ('Cancelled', 'Cancelled')], default='Pending')

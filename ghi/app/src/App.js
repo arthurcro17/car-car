@@ -4,6 +4,8 @@ import Nav from './Nav';
 import ServiceHistoryPage from './ServiceHistory';
 import ServiceListPage from './ServiceList';
 import ServiceForm from './ServiceForm';
+import TechnicianForm from './TechnicianForm';
+import ServiceHistory2Page from './ServiceHistory2';
 
 function App() {
   return (
@@ -16,6 +18,10 @@ function App() {
             <Route path='' element={<ServiceListPage />} />
             <Route path='new' element={<ServiceForm />} />
             <Route path='history' element={<ServiceHistoryPage />} />
+            <Route path='history2' element={<ServiceHistory2Page />} />
+            <Route path='technicians'>
+              <Route path = 'new' element={<TechnicianForm />} />
+            </Route>
           </Route>
         </Routes>
 
