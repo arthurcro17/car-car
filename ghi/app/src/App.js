@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import MainPage from './MainPage';
 import Nav from './Nav';
 import CustomerForm from './Customer';
+import SalesPersonForm from './SalesPerson';
 
 function App() {
 
@@ -12,7 +13,8 @@ function App() {
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="sales">
-            <Route path="" element={<CustomerForm />} />
+            <Route path="customer" element={<CustomerForm />} />
+            <Route path="salesperson" element={<SalesPersonForm />} />
           </Route>
         </Routes>
       </div>
