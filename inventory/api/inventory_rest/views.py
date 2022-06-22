@@ -34,7 +34,7 @@ def api_automobiles(request):
             response = JsonResponse(
                 {"message": "Could not create the automobile"}
             )
-            response.status_code = 400
+            # response.status_code = 400
             return response
 
 
@@ -102,10 +102,11 @@ def api_manufacturers(request):
                 safe=False,
             )
         except:
+            print('except triggered')
             response = JsonResponse(
                 {"message": "Could not create the manufacturer"}
             )
-            response.status_code = 400
+            # response.status_code = 400
             return response
 
 
