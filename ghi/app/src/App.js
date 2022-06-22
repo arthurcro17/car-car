@@ -4,6 +4,11 @@ import Nav from './Nav';
 import CustomerForm from './Customer';
 import SalesPersonForm from './SalesPerson';
 import SaleRecord from './SaleRecord';
+import ServiceHistoryPage from './ServiceHistory';
+import ServiceListPage from './ServiceList';
+import ServiceForm from './ServiceForm';
+import TechnicianForm from './TechnicianForm';
+import ServiceHistory2Page from './ServiceHistory2';
 
 function App() {
 
@@ -18,7 +23,17 @@ function App() {
             <Route path="salesperson" element={<SalesPersonForm />} />
             <Route path="salerecord" element={<SaleRecord />} />
           </Route>
+          <Route path='services'>
+            <Route path='' element={<ServiceListPage />} />
+            <Route path='new' element={<ServiceForm />} />
+            <Route path='history' element={<ServiceHistoryPage />} />
+            <Route path='history2' element={<ServiceHistory2Page />} />
+            <Route path='technicians'>
+              <Route path = 'new' element={<TechnicianForm />} />
+            </Route>
+          </Route>
         </Routes>
+
       </div>
     </BrowserRouter>
   );

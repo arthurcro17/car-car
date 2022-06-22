@@ -4,12 +4,15 @@ from django.db.models import QuerySet
 from datetime import datetime
 
 
+
 class DateEncoder(JSONEncoder):
     def default(self, o):
         if isinstance(o, datetime):
             return o.isoformat()
         else:
             return super().default(o)
+
+
 
 
 class QuerySetEncoder(JSONEncoder):
