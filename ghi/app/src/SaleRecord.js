@@ -74,7 +74,9 @@ class SaleRecord extends React.Component {
 
     handleSalesPeopleChange(event){
         const value = event.target.value;
+        console.log("Value of salesPerson: ", value);
         this.setState({salesPerson: value})
+        console.log("State of salesPerson: ", this.state);
     }
 
     async componentDidMount () {

@@ -5,11 +5,11 @@ class ListSalesBySalesPerson extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: '',
-            names: [],
             sales: [],
+            salesPeople: [],
+            salesPerson: '',
         }
-        this.handleNameChange = this.handleNameChange.bind(this);
+        this.handleSalesPeopleChange = this.handleSalesPeopleChange.bind(this);
         this.handleSalesChange = this.handleSalesChange.bind(this);
         this.handleSubmitChange = this.handleSubmitChange.bind(this);
     }
@@ -18,9 +18,9 @@ class ListSalesBySalesPerson extends React.Component {
         event.preventDefault();
     }
 
-    handleNameChange(event){
+    handleSalesPeopleChange(event){
         const value = event.target.value;
-        this.setState({name: value})
+        this.setState({salesPerson: value})
     }
 
     handleSalesChange(event){
@@ -34,15 +34,15 @@ class ListSalesBySalesPerson extends React.Component {
             const response = await fetch(url)
             if (response.ok) {
                 const data = await response.json();
-                console.log("DATA: ", data);
+                //console.log("DATA: ", data);
                 this.setState({sales: data.sale_records});
-                console.log("STATE: ", this.state);
+                //console.log("STATE: ", this.state);
             }
             const salesPeopleUrl = 'http://localhost:8090/api/salespeople/';
             const salesPeopleResponse = await fetch(salesPeopleUrl);
             if (salesPeopleResponse.ok) {
                 const salesPeopleData = await salesPeopleResponse.json();
-                console.log("SALES PEOPLE DATA: ", salesPeopleData.sales_person);
+                //console.log("SALES PEOPLE DATA: ", salesPeopleData.sales_person);
                 this.setState({salesPeople: salesPeopleData.sales_person})
             }
         }
@@ -55,19 +55,18 @@ class ListSalesBySalesPerson extends React.Component {
         return (
             <>
             <br></br>
-                <form onSubmit={this.handleSubmitChange} id="select-vin-form">
-                    <select onChange={this.handleNameChange} value={this.state.name} required name="name" id="name" className="form-select">
+                <form onChange={this.handleSubmitChange} id="select-vin-form">
+                    <select onChange={this.handleSalesPeopleChange} value={this.state.salesPerson} required name="name" id="name" className="form-select">
                         <option value="">Choose a sales person</option>
-                        {this.state.names.map(name => {
+                        {this.state.salesPeople.map(sales_person => {
                             return (
-                                <option key={name.employee_number} value={name.employee_number}>
-                                    {name}
+                                <option key={sales_person.employee_number} value={sales_person.employee_number}>
+                                    {sales_person.name}
                                 </option>
                             );
                         })}
                     </select>
                     <br></br>
-                    <button className="btn btn-success btn-sm">Create</button>
                 </form>
                 <table className="table table-striped">
                     <thead>
@@ -81,15 +80,30 @@ class ListSalesBySalesPerson extends React.Component {
                     </thead>
                     <tbody>
                         {this.state.sales.map(sale => {
-                            return (
-                                <tr key={sale.id}>
-                                    <td>{sale.automobile.vin}</td>
-                                    <td>$ {sale.sales_price}</td>
-                                    <td>{sale.sale_person.name}</td>
-                                    <td>{sale.sale_person.employee_number}</td>
-                                    <td>{sale.customer.name}</td>
-                                </tr>
-                            )
+                            if (this.state.salesPerson) {
+                                if (sale.sale_person.employee_number == this.state.salesPerson) {
+                                    return (
+                                        <tr key={sale.id}>
+                                            <td>{sale.automobile.vin}</td>
+                                            <td>$ {sale.sales_price}</td>
+                                            <td>{sale.sale_person.name}</td>
+                                            <td>{sale.sale_person.employee_number}</td>
+                                            <td>{sale.customer.name}</td>
+                                        </tr>
+                                    )
+                                }
+                            }
+                            else {
+                                return (
+                                    <tr key={sale.id}>
+                                        <td>{sale.automobile.vin}</td>
+                                        <td>$ {sale.sales_price}</td>
+                                        <td>{sale.sale_person.name}</td>
+                                        <td>{sale.sale_person.employee_number}</td>
+                                        <td>{sale.customer.name}</td>
+                                    </tr>
+                                )
+                            }
                         })}
                     </tbody>
                 </table>
