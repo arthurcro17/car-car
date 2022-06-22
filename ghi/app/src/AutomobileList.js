@@ -15,8 +15,10 @@ class AutomobileListPage extends React.Component {
     try {
       const response = await fetch(url)
       if (response.ok) {
+        
         const data = await response.json()
-        this.setState({automobiles: data.autos})
+        console.log(data)
+        this.setState({automobiles: data.automobiles})
       }
     } 
     catch (e) {

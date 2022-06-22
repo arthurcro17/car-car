@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+
 
 
 class ServiceHistoryPage extends React.Component {
@@ -27,9 +27,11 @@ class ServiceHistoryPage extends React.Component {
   }
 
   async handleSubmit(event) {
+    console.log('part 1')
     event.preventDefault()
-    const data = {...this.state}
-    let serviceUrl = `http://localhost:8080/api/services/history/${data.vin}`
+
+    console.log(this.state.vin)
+    let serviceUrl = `http://localhost:8080/api/services/history/${this.state.vin}`
     try {
         const response = await fetch(serviceUrl)
         if (response.ok) {
@@ -39,25 +41,28 @@ class ServiceHistoryPage extends React.Component {
         }
     }
     catch (e) {
-        console.log('errrrrr')
+        console.log('caught error')
+        window.alert(`${this.state.vin} has no service history`)
+        console.log('caught error')
         console.error(e)
     }
   }
 
-  async componentDidMount() {
-    const url = 'http://localhost:8080/api/services/'
-    try {
-      const response = await fetch(url)
-      if (response.ok) {
-        const data = await response.json()
-        let vins = data['services'].map(car => car['vin'])
-        let uniqueVins = [...new Set(vins)]
-        this.setState({vins: uniqueVins})
-      }
-    } catch (e) {
-      console.error(e)
-    }
-  }
+//   async componentDidMount() {
+//     const url = 'http://localhost:8080/api/services/'
+//     try {
+//       const response = await fetch(url)
+//       if (response.ok) {
+//         const data = await response.json()
+//         console.log(data)
+//         let vins = data['services'].map(car => car['vin'])
+//         let uniqueVins = [...new Set(vins)]
+//         this.setState({vins: uniqueVins})
+//       }
+//     } catch (e) {
+//       console.error(e)
+//     }
+//   }
 
   render() {
     return (
@@ -68,16 +73,10 @@ class ServiceHistoryPage extends React.Component {
           <h1>Service History</h1>
           <form onSubmit={this.handleSubmit} id="search-vin-history-form">
             <div className="mb-3">
-              <select value={this.state.vin} onChange={this.handleVinChange} required id="vin" name="vin" className="form-select">
-                <option value="">Select a VIN</option>
-                {this.state.vins.map(vin => {
-                      return (
-                          <option value={vin} key={vin}>
-                              {vin}
-                          </option>
-                      )
-                  })}
-              </select>
+              <div className="form-floating mb-3">
+                <input value={this.state.vin} onChange={this.handleVinChange} placeholder="Vin" name="vin" required type="text" id="vin" className="form-control"/>
+                <label htmlFor="vin">VIN</label>
+              </div>
             </div>
             <button className="btn btn-primary">Search</button>
           </form>
