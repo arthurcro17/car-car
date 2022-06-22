@@ -4,11 +4,16 @@ import Nav from './Nav';
 import CustomerForm from './Customer';
 import SalesPersonForm from './SalesPerson';
 import SaleRecord from './SaleRecord';
+import ListSales from './ListSales';
+import ListSalesBySalesPerson from './SalesBySalesPerson';
+
 import ServiceHistoryPage from './ServiceHistory';
 import ServiceListPage from './ServiceList';
 import ServiceForm from './ServiceForm';
 import TechnicianForm from './TechnicianForm';
 import ServiceHistory2Page from './ServiceHistory2';
+
+
 
 function App() {
 
@@ -22,6 +27,8 @@ function App() {
             <Route path="customer" element={<CustomerForm />} />
             <Route path="salesperson" element={<SalesPersonForm />} />
             <Route path="salerecord" element={<SaleRecord />} />
+            <Route path="" element={<ListSales />} />
+            <Route path="bysalesperson" element={<ListSalesBySalesPerson />} />
           </Route>
           <Route path='services'>
             <Route path='' element={<ServiceListPage />} />

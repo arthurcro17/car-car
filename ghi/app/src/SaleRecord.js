@@ -109,11 +109,11 @@ class SaleRecord extends React.Component {
             <div className="row">
                 <div className="offset-3 col-6">
                     <div className="shadow p-4 mt-4">
-                        <h1>Create a new Sales Record</h1>
+                        <h1>Record a new sale</h1>
                         <form onSubmit={this.handleSubmitChange} id="create-location-form">
                         <div className="form-floating mb-3">
                             <select onChange={this.handleAutomobileChange} value={this.state.automobile} required name="automobile" id="automobile" className="form-select">
-                                <option value="">Car make / model</option>
+                                <option value="">Choose an automobile</option>
                                 {this.state.automobiles.map(automobile =>{
                                     return (
                                         <option key={automobile.id} value={automobile.id}>
@@ -125,11 +125,11 @@ class SaleRecord extends React.Component {
                         </div>
                         <div className="form-floating mb-3">
                             <input onChange={this.handleSalePriceChange} value={this.state.salePrice} placeholder="sale price" required type="number" name="salePrice" id="salePrice" className="form-control"/>
-                            <label htmlFor="salePrice">Sale Price</label>
+                            <label htmlFor="salePrice">Sale price</label>
                         </div>
                         <div className="form-floating mb-3">
                             <select onChange={this.handleCustomerChange} value={this.state.customer} required name="customer" id="customer" className="form-select">
-                                <option value="">Customer</option>
+                                <option value="">Choose a customer</option>
                                 {this.state.customers.map(customer =>{
                                     return (
                                         <option key={customer.id} value={customer.id}>
@@ -141,7 +141,7 @@ class SaleRecord extends React.Component {
                         </div>
                         <div className="form-floating mb-3">
                             <select onChange={this.handleSalesPeopleChange} value={this.state.salesPerson} required name="sales_people" id="sales_people" className="form-select">
-                                <option value="">Sales Person</option>
+                                <option value="">Choose a sales person</option>
                                 {this.state.salesPeople.map(sales_person =>{
                                     return (
                                         <option key={sales_person.employee_number} value={sales_person.employee_number}>
