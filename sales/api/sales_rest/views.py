@@ -182,6 +182,7 @@ def api_sale_records(request):
             automobile = AutomobileVO.objects.get(id=autovin)
             print('get auto info')
             content["automobile"] = automobile
+            print(content["automobile"])
             sale_records = SaleRecord.objects.create(**content)
             
             print('end auto')

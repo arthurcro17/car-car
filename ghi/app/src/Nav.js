@@ -1,4 +1,6 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import Dropdown from 'react-bootstrap/Dropdown';
 
 function Nav() {
   return (
@@ -11,10 +13,17 @@ function Nav() {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <NavLink className="nav-link active" aria-current="page" to="/">Home</NavLink>
+              <NavLink className="nav-link" aria-current="page" to="/">Home</NavLink>
             </li>
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/sales/customer">Add a potential customer</NavLink>
+            <DropdownButton variant="success" id="dropdown-basic-button" title="Sales">
+                <Dropdown.Item as={Link} to="/sales/customer">Add a potential customer </Dropdown.Item>
+                <Dropdown.Item as={Link} to="/sales/salesperson">Add a sales person</Dropdown.Item>
+                <Dropdown.Item as={Link} to="/sales/salerecord">Create a new sale record</Dropdown.Item>
+                <Dropdown.Item as={Link} to="/sales/">View all sales</Dropdown.Item>
+                <Dropdown.Item as={Link} to="/sales/bysalesperson">Sales by sales person</Dropdown.Item>
+            </DropdownButton>
+            {/* <li className="nav-item">
+                <NavLink className="nav-link" to="/sales/customer">Add a potential customer</NavLink>
             </li>
             <li className="nav-item">
               <NavLink className="nav-link" to="/sales/salesperson">Add a sales person</NavLink>
@@ -27,7 +36,7 @@ function Nav() {
             </li>
             <li className="nav-item">
               <NavLink className="nav-link" to="/sales/bysalesperson">Sales by sales person</NavLink>
-            </li>
+            </li> */}
             <li className="nav-item">
               <NavLink className="nav-link" to="/services">Services</NavLink>
             </li>
