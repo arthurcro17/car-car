@@ -16,8 +16,8 @@ class CustomerForm extends React.Component {
         event.preventDefault();
         const data = {...this.state}
         console.log("check submit data: ", data)
-        const salesUrl = 'http://localhost:8090/api/customer/';
-        console.log(salesUrl);
+        const customerUrl = 'http://localhost:8090/api/customer/';
+        console.log(customerUrl);
         const fetchConfig = {
             method: "POST",
             body: JSON.stringify(data),
@@ -25,7 +25,7 @@ class CustomerForm extends React.Component {
                 'Content-Type': 'application/json',
             },
         };
-        const response = await fetch(salesUrl, fetchConfig);
+        const response = await fetch(customerUrl, fetchConfig);
         if (response.ok) {
             const newCustomer = await response.json();
             console.log(newCustomer);

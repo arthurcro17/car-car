@@ -82,9 +82,9 @@ def api_sales_person(request, pk):
 @require_http_methods(["GET", "POST"])
 def api_customers(request):
     if request.method == "GET":
-        customer = Customer.objects.all()
+        customers = Customer.objects.all()
         return JsonResponse(
-            {"customer": customer},
+            {"customers": customers},
             encoder=CustomerEncoder
         )
     else:

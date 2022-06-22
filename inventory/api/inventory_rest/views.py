@@ -13,9 +13,9 @@ from .models import Automobile, Manufacturer, VehicleModel
 @require_http_methods(["GET", "POST"])
 def api_automobiles(request):
     if request.method == "GET":
-        autos = Automobile.objects.all()
+        automobiles = Automobile.objects.all()
         return JsonResponse(
-            {"autos": autos},
+            {"automobiles": automobiles},
             encoder=AutomobileEncoder,
         )
     else:
