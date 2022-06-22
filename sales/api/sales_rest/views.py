@@ -170,9 +170,13 @@ def api_sale_records(request):
 
             # auto info
             autovin = content["automobile"]
+            print("autovin: ", autovin)
             automobile = AutomobileVO.objects.get(id=autovin)
+            print("automobile: ", automobile)
             content["automobile"] = automobile
+            print(content["automobile"])
             sale_records = SaleRecord.objects.create(**content)
+            print(sale_records)
             return JsonResponse(
                 sale_records,
                 encoder=SaleRecordEncoder,

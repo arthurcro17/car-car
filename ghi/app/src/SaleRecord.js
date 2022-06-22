@@ -29,7 +29,7 @@ class SaleRecord extends React.Component {
         delete data.salesPeople;
         delete data.automobiles;
         delete data.customers;
-        console.log("check submit data: ", data);
+        //console.log("check submit data: ", data);
         const saleRecordUrl = 'http://localhost:8090/api/salerecord/'
         const fetchConfig = {
             method: "POST",
@@ -41,7 +41,7 @@ class SaleRecord extends React.Component {
         const response = await fetch(saleRecordUrl, fetchConfig);
         if (response.ok) {
             const newSaleRecord = await response.json();
-            console.log(newSaleRecord);
+            //console.log(newSaleRecord);
 
             const cleared = {
                 automobile: '',
@@ -53,7 +53,7 @@ class SaleRecord extends React.Component {
             this.setState(cleared);
         }
         else {
-            console.log("what is happening")
+            //console.log("what is happening")
         }
     }
 
@@ -74,9 +74,9 @@ class SaleRecord extends React.Component {
 
     handleSalesPeopleChange(event){
         const value = event.target.value;
-        console.log("Value of salesPerson: ", value);
+        //console.log("Value of salesPerson: ", value);
         this.setState({salesPerson: value})
-        console.log("State of salesPerson: ", this.state);
+        //console.log("State of salesPerson: ", this.state);
     }
 
     async componentDidMount () {
@@ -84,7 +84,7 @@ class SaleRecord extends React.Component {
         const automobileResponse = await fetch(automobileUrl);
         if (automobileResponse.ok) {
             const autoData = await automobileResponse.json();
-            console.log("AUTO DATA: ", autoData.automobiles);
+            //console.log("AUTO DATA: ", autoData.automobiles);
             this.setState({automobiles: autoData.automobiles});
         }
 
@@ -92,7 +92,7 @@ class SaleRecord extends React.Component {
         const customerResponse = await fetch(customerUrl);
         if (customerResponse.ok) {
             const customerData = await customerResponse.json();
-            console.log("CUSTOMER DATA: ", customerData.customers);
+            //console.log("CUSTOMER DATA: ", customerData.customers);
             this.setState({customers: customerData.customers})
         }
 
@@ -100,7 +100,7 @@ class SaleRecord extends React.Component {
         const salesPeopleResponse = await fetch(salesPeopleUrl);
         if (salesPeopleResponse.ok) {
             const salesPeopleData = await salesPeopleResponse.json();
-            console.log("SALES PEOPLE DATA: ", salesPeopleData.sales_person);
+            //console.log("SALES PEOPLE DATA: ", salesPeopleData.sales_person);
             this.setState({salesPeople: salesPeopleData.sales_person})
         }
     }
