@@ -19,8 +19,6 @@ import AutomobileListPage from './AutomobileList';
 import AutomobileForm from './AutomobileForm';
 
 
-
-
 function App() {
 
   return (
@@ -60,7 +58,6 @@ function App() {
             </Route>
           </Route>
         </Routes>
-
       </div>
     </BrowserRouter>
   );
