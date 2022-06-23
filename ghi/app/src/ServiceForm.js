@@ -147,7 +147,7 @@ class ServiceForm extends React.Component {
                                 })}
                             </select>
                         </div>
-                        <button className="btn btn-primary">Create</button>
+                        <button className="btn btn-success">Create</button>
                         </form>
                     </div>
                 </div>

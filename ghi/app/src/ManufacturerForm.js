@@ -58,11 +58,11 @@ class ManufacturerForm extends React.Component {
                             <input onChange={this.handleNameChange} value={this.state.name} placeholder="Name" required type="text" name="name" id="name" className="form-control"/>
                             <label htmlFor="name">Name</label>
                         </div>
-                        <button className="btn btn-primary">Create</button>
+                        <button className="btn btn-success">Create</button>
                         </form>
                     </div>
                     <div className='text-center'>
-                        <Link to="/inventory/manufacturers/" className="btn btn-primary btn-md px-3 gap-3">Back to manufacturers</Link>
+                        <Link to="/inventory/manufacturers/" className="btn btn-success btn-md px-3 gap-3">Back to manufacturers</Link>
                     </div>
                     
                 </div>

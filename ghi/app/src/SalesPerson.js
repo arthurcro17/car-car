@@ -68,7 +68,7 @@ class SalesPersonForm extends React.Component {
                             <input onChange={this.handleEmployeeNumberChange} value={this.state.employeeNumber} placeholder="Employee Number" required type="text" name="employee_number" id="employee_number" className="form-control"/>
                             <label htmlFor="employee_number">Employee Number</label>
                         </div>
-                        <button className="btn btn-primary">Create</button>
+                        <button className="btn btn-success">Create</button>
                         </form>
                     </div>
                 </div>

@@ -116,11 +116,11 @@ class AutomobileForm extends React.Component {
                                 })}
                             </select>
                         </div>
-                        <button className="btn btn-primary">Create</button>
+                        <button className="btn btn-success">Create</button>
                         </form>
                     </div>
                     <div className='text-center'>
-                        <Link to="/inventory/automobiles/" className="btn btn-primary btn-md px-3 gap-3">Back to automobiles</Link>
+                        <Link to="/inventory/automobiles/" className="btn btn-success btn-md px-3 gap-3">Back to automobiles</Link>
                     </div>
                     
                 </div>
