@@ -17,7 +17,6 @@ class AutomobileListPage extends React.Component {
       if (response.ok) {
         
         const data = await response.json()
-        console.log(data)
         this.setState({automobiles: data.automobiles})
       }
     } 

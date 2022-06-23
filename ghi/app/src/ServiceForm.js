@@ -33,15 +33,12 @@ class ServiceForm extends React.Component {
         event.preventDefault();
         const data = {...this.state}
         delete data.technicians;
-        console.log("checking submit data: ", data);
-        console.log(typeof data.date)
         let year = data.date.slice(0,4)
         let month = data.date.slice(5,7)
         let day = data.date.slice(8-10)
         let hour = data.time.slice(0,2)
         let minute = data.time.slice(3)
         let formated_date = new Date(Date.UTC(year, month, day, hour, minute))
-        console.log(formated_date)
         data['date'] = formated_date
         delete data.time
         const servicesUrl = 'http://localhost:8080/api/services/'
@@ -55,8 +52,6 @@ class ServiceForm extends React.Component {
         const response = await fetch(servicesUrl, fetchConfig);
         if (response.ok) {
             const newServices = await response.json();
-            console.log(newServices);
-
             const cleared = {
                 owner: '',
                 vin: '',

@@ -67,7 +67,6 @@ def api_list_services(request, vin=None):
                 )
         else:
             services = Service.objects.filter(status='Pending')
-            print(services)
         return JsonResponse(
             {'services': services},
             encoder=ServiceEncoder
@@ -87,7 +86,6 @@ def api_list_services(request, vin=None):
  
         if AutoVO.objects.filter(vin=content['vin']):
             content['vip'] = True
-        print(content)
         service = Service.objects.create(**content)
         return JsonResponse(
             service,

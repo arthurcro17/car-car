@@ -27,10 +27,7 @@ class ServiceHistoryPage extends React.Component {
   }
 
   async handleSubmit(event) {
-    console.log('part 1')
     event.preventDefault()
-
-    console.log(this.state.vin)
     let serviceUrl = `http://localhost:8080/api/services/history/${this.state.vin}`
     try {
         const response = await fetch(serviceUrl)
@@ -41,28 +38,10 @@ class ServiceHistoryPage extends React.Component {
         }
     }
     catch (e) {
-        console.log('caught error')
         window.alert(`${this.state.vin} has no service history`)
-        console.log('caught error')
         console.error(e)
     }
   }
-
-//   async componentDidMount() {
-//     const url = 'http://localhost:8080/api/services/'
-//     try {
-//       const response = await fetch(url)
-//       if (response.ok) {
-//         const data = await response.json()
-//         console.log(data)
-//         let vins = data['services'].map(car => car['vin'])
-//         let uniqueVins = [...new Set(vins)]
-//         this.setState({vins: uniqueVins})
-//       }
-//     } catch (e) {
-//       console.error(e)
-//     }
-//   }
 
   render() {
     return (

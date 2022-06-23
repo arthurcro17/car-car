@@ -34,15 +34,12 @@ class ListSalesBySalesPerson extends React.Component {
             const response = await fetch(url)
             if (response.ok) {
                 const data = await response.json();
-                //console.log("DATA: ", data);
                 this.setState({sales: data.sale_records});
-                //console.log("STATE: ", this.state);
             }
             const salesPeopleUrl = 'http://localhost:8090/api/salespeople/';
             const salesPeopleResponse = await fetch(salesPeopleUrl);
             if (salesPeopleResponse.ok) {
                 const salesPeopleData = await salesPeopleResponse.json();
-                //console.log("SALES PEOPLE DATA: ", salesPeopleData.sales_person);
                 this.setState({salesPeople: salesPeopleData.sales_person})
             }
         }

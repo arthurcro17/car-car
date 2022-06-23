@@ -15,9 +15,7 @@ class ListSales extends React.Component {
             const response = await fetch(url)
             if (response.ok) {
                 const data = await response.json();
-                console.log("DATA: ", data);
                 this.setState({sales: data.sale_records});
-                console.log("STATE: ", this.state);
             }
         }
         catch (e) {

@@ -15,9 +15,7 @@ class CustomerForm extends React.Component {
     async handleSubmitChange(event){
         event.preventDefault();
         const data = {...this.state}
-        console.log("check submit data: ", data)
         const customerUrl = 'http://localhost:8090/api/customer/';
-        console.log(customerUrl);
         const fetchConfig = {
             method: "POST",
             body: JSON.stringify(data),
@@ -28,7 +26,6 @@ class CustomerForm extends React.Component {
         const response = await fetch(customerUrl, fetchConfig);
         if (response.ok) {
             const newCustomer = await response.json();
-            console.log(newCustomer);
 
             const cleared = {
                 name: '',
@@ -37,7 +34,7 @@ class CustomerForm extends React.Component {
             this.setState(cleared);
         }
         else {
-            console.log("what is happening")
+            console.log("Submit response failed")
         }
     }
     

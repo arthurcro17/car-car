@@ -156,38 +156,20 @@ def api_sale_records(request):
         )
     else:
         try:
-            print('trying')
             content = json.loads(request.body)
-            print('start employee')
             # employee info
             employee = content["sale_person"]
             sale_person = SalesPerson.objects.get(employee_number=employee)
             content["sale_person"] = sale_person
-
-            print('end employee')
-            print('start customer')
-
             # customer info
             customer_id = content["customer"]
             customer = Customer.objects.get(pk=customer_id)
             content["customer"] = customer
-
-            print('end customer')
-            print('start auto')
-
             # auto info
             autovin = content["automobile"]
-            print(autovin)
-            print(list(AutomobileVO.objects.all()))
             automobile = AutomobileVO.objects.get(id=autovin)
-            print('get auto info')
             content["automobile"] = automobile
-            print(content["automobile"])
             sale_records = SaleRecord.objects.create(**content)
-            
-            print('end auto')
-            print('start response')
-
             return JsonResponse(
                 sale_records,
                 encoder=SaleRecordEncoder,
@@ -230,11 +212,7 @@ def api_sale_record(request, pk):
         content = json.loads(request.body)
         try:
             content = json.loads(request.body)
-            print("this is the content: ", content)
-            print("this is the pk: ", pk)
             sale_record = SaleRecord.objects.get(id=pk)
-            print("ONE RECORD: ", sale_record)
-            print("SALE RECORD: ", sale_record.id, sale_record.customer)
             SaleRecord.objects.filter(id=pk).update(**content)
             return JsonResponse(
                 sale_record,

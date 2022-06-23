@@ -16,17 +16,12 @@ class ServiceListPage extends React.Component {
         method: "PUT",
         body: JSON.stringify({'status': change})
     }
-    console.log('before')
     const response = await fetch(serviceUrl, fetchConfig)
-    console.log('after')
     if (response.ok) {
-        console.log('ok response')
         const new_services = this.state.services.filter(function(service) {
             return service.id !== id
         })
-
         this.setState({services: new_services})
-        console.log('set the state')
     }
   }}
 
@@ -49,7 +44,6 @@ class ServiceListPage extends React.Component {
       if (response.ok) {
         const data = await response.json()
         this.setState({services: data.services})
-        console.log(this.state)
       }
     } 
     catch (e) {

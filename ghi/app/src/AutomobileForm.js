@@ -25,7 +25,6 @@ class AutomobileForm extends React.Component {
         event.preventDefault();
         const data = {...this.state}
         delete data.models
-        console.log(data)
         const modelsUrl = 'http://localhost:8100/api/automobiles/'
         const fetchConfig = {
             method: "POST",
@@ -71,7 +70,6 @@ class AutomobileForm extends React.Component {
 
     handleModelChange(event) {
         const value = event.target.value;
-        console.log(value)
         this.setState({model_id: Number(value)});
     }
 

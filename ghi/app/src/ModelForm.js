@@ -23,7 +23,6 @@ class ModelForm extends React.Component {
         event.preventDefault();
         const data = {...this.state}
         delete data.manufacturers
-        console.log(data)
         const modelsUrl = 'http://localhost:8100/api/models/'
         const fetchConfig = {
             method: "POST",
@@ -63,7 +62,6 @@ class ModelForm extends React.Component {
 
     handleManufacturerChange(event) {
         const value = event.target.value;
-        console.log(value)
         this.setState({manufacturer_id: Number(value)});
     }
 

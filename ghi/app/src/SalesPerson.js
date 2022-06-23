@@ -17,9 +17,7 @@ class SalesPersonForm extends React.Component {
         const data = {...this.state}
         data.employee_number = data.employeeNumber;
         delete data.employeeNumber
-        console.log("check submit data: ", data)
         const salesUrl = 'http://localhost:8090/api/salespeople/';
-        console.log(salesUrl);
         const fetchConfig = {
             method: "POST",
             body: JSON.stringify(data),
@@ -30,8 +28,6 @@ class SalesPersonForm extends React.Component {
         const response = await fetch(salesUrl, fetchConfig);
         if (response.ok) {
             const newCustomer = await response.json();
-            console.log(newCustomer);
-
             const cleared = {
                 name: '',
                 employeeNumber: '',
@@ -39,7 +35,7 @@ class SalesPersonForm extends React.Component {
             this.setState(cleared);
         }
         else {
-            console.log("what is happening")
+            console.log("response failed")
         }
     }
 
