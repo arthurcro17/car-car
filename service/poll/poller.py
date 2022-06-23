@@ -16,10 +16,11 @@ from service_rest.models import AutoVO
 def get_autos():
     response = requests.get("http://inventory-api:8000/api/automobiles/")
     content = json.loads(response.content)
-    for automobile in content['autos']:
+    for automobile in content['automobiles']:
         AutoVO.objects.update_or_create(
-            defaults={"vin": automobile["vin"]}
+            vin=automobile["vin"]
         )
+        print("All Autos: ", AutoVO.objects.all())
 
 def poll():
     while True:
