@@ -16,9 +16,13 @@ function Nav() {
               <NavLink className="nav-link" aria-current="page" to="/">Home</NavLink>
             </li>
             <DropdownButton variant="success" id="dropdown-basic-button" title="Inventory">
-                <Dropdown.Item as={Link} to="/inventory/manufacturers">Add a new manufacturer</Dropdown.Item>
-                <Dropdown.Item as={Link} to="/inventory/models">Add a new model</Dropdown.Item>
-                <Dropdown.Item as={Link} to="/inventory/automobiles">Add a new automobile</Dropdown.Item>
+                {/* <Dropdown.Item as={Link} to="/inventory/">View all inventory</Dropdown.Item> */}
+                <Dropdown.Item as={Link} to="/inventory/manufacturers">View all manufacturers</Dropdown.Item>
+                <Dropdown.Item as={Link} to="/inventory/manufacturers/new">Add a new manufacturer</Dropdown.Item>
+                <Dropdown.Item as={Link} to="/inventory/models">View all models</Dropdown.Item>
+                <Dropdown.Item as={Link} to="/inventory/models/new">Add a new model</Dropdown.Item>
+                <Dropdown.Item as={Link} to="/inventory/automobiles">View all automobiles</Dropdown.Item>
+                <Dropdown.Item as={Link} to="/inventory/automobiles/new">Add a new automobile</Dropdown.Item>
             </DropdownButton>
             <DropdownButton variant="success" id="dropdown-basic-button" title="Sales">
                 <Dropdown.Item as={Link} to="/sales/customer">Add a potential customer</Dropdown.Item>
@@ -28,6 +32,7 @@ function Nav() {
                 <Dropdown.Item as={Link} to="/sales/bysalesperson">Sales by sales person</Dropdown.Item>
             </DropdownButton>
             <DropdownButton variant="success" id="dropdown-basic-button" title="Services">
+              <Dropdown.Item as={Link} to="/services">View all services</Dropdown.Item>
                 <Dropdown.Item as={Link} to="/services/new">Add a new service</Dropdown.Item>
                 <Dropdown.Item as={Link} to="/services/history">Vehicle history</Dropdown.Item>
                 <Dropdown.Item as={Link} to="/services/technicians/new">Add a new technician</Dropdown.Item>
