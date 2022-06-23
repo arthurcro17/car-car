@@ -77,7 +77,7 @@ class CustomerForm extends React.Component {
                             <label htmlFor="address">Address</label>
                         </div>
                         <div className="form-floating mb-3">
-                            <input onChange={this.handlePhoneNumberChange} value={this.state.phoneNumber} placeholder="Phone number" required type="text" name="phone_number" id="phone_number" className="form-control"/>
+                            <input type="tel" onChange={this.handlePhoneNumberChange} value={this.state.phoneNumber} placeholder="Phone number" required type="text" name="phone_number" id="phone_number" className="form-control"/>
                             <label htmlFor="phone_number">Phone number</label>
                         </div>
                         <button className="btn btn-success">Create</button>
