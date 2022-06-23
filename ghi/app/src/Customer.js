@@ -6,15 +6,19 @@ class CustomerForm extends React.Component {
         this.state = {
             name: '',
             address: '',
+            phoneNumber: '',
         };
         this.handleNameChange = this.handleNameChange.bind(this);
         this.handleAddressChange = this.handleAddressChange.bind(this);
+        this.handlePhoneNumberChange = this.handlePhoneNumberChange.bind(this);
         this.handleSubmitChange = this.handleSubmitChange.bind(this);
     }
 
     async handleSubmitChange(event){
         event.preventDefault();
         const data = {...this.state}
+        data.phone_number = data.phoneNumber;
+        delete data.phoneNumber;
         console.log("check submit data: ", data)
         const customerUrl = 'http://localhost:8090/api/customer/';
         console.log(customerUrl);
@@ -33,6 +37,7 @@ class CustomerForm extends React.Component {
             const cleared = {
                 name: '',
                 address: '',
+                phoneNumber: '',
             }
             this.setState(cleared);
         }
@@ -51,6 +56,11 @@ class CustomerForm extends React.Component {
         this.setState({address: value})
     }
 
+    handlePhoneNumberChange(event){
+        const value = event.target.value;
+        this.setState({phoneNumber: value})
+    }
+
     render(){
         return(
             <div className="row">
@@ -66,7 +76,11 @@ class CustomerForm extends React.Component {
                             <input onChange={this.handleAddressChange} value={this.state.address} placeholder="Address" required type="text" name="address" id="address" className="form-control"/>
                             <label htmlFor="address">Address</label>
                         </div>
-                        <button className="btn btn-primary">Create</button>
+                        <div className="form-floating mb-3">
+                            <input onChange={this.handlePhoneNumberChange} value={this.state.phoneNumber} placeholder="Phone number" required type="text" name="phone_number" id="phone_number" className="form-control"/>
+                            <label htmlFor="phone_number">Phone number</label>
+                        </div>
+                        <button className="btn btn-success">Create</button>
                         </form>
                     </div>
                 </div>
