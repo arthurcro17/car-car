@@ -20,7 +20,7 @@ class ServiceForm extends React.Component {
             technicians: [],
             reason: '',
             message: '',
-            success: '',
+            success: 'd-none',
             form: 'shadow p-4 mt-4',
             technician: '',
         };
@@ -90,6 +90,7 @@ class ServiceForm extends React.Component {
                 technician: '',
                 reason: '',
                 form: 'd-none',
+                success: '',
                 message: `Service for ${data.vin} has been created`
 
             }
@@ -144,7 +145,8 @@ class ServiceForm extends React.Component {
                     <div className={this.state.success}>
                         <div className="alert alert-success mt-4" role="alert">
                             {this.state.message}
-                            <button onClick={this.reset} className="btn btn-success">Create another technician</button>
+                            <br/>
+                            <button onClick={this.reset} className="btn btn-success">Create another service</button>
                         </div>
                     </div>
                     <div className={this.state.form}>
