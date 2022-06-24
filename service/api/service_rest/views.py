@@ -44,17 +44,14 @@ def api_list_technicians(request):
         )
     else:
         content = json.loads(request.body)
-        print(content)
         try:
             technician = Technician.objects.create(**content)
-            print('trying')
             return JsonResponse(
                 technician,
                 encoder=TechnicianEncoder,
                 safe = False
         )
         except IntegrityError:
-            print('except')
             response = JsonResponse({'message': 'Number already in use'})
             response.status_code = 400
             return response
