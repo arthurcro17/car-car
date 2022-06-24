@@ -44,15 +44,21 @@ def api_list_technicians(request):
         )
     else:
         content = json.loads(request.body)
+        print(content)
         try:
             technician = Technician.objects.create(**content)
-        except IntegrityError:
-            return JsonResponse({'message': 'Number already in use'})
-        return JsonResponse(
-            technician,
-            encoder=TechnicianEncoder,
-            safe = False
+            print('trying')
+            return JsonResponse(
+                technician,
+                encoder=TechnicianEncoder,
+                safe = False
         )
+        except IntegrityError:
+            print('except')
+            response = JsonResponse({'message': 'Number already in use'})
+            response.status_code = 400
+            return response
+        
 
 
 @require_http_methods(['GET', 'POST'])
@@ -73,18 +79,15 @@ def api_list_services(request, vin=None):
         )
     else:
         content = json.loads(request.body)
-
         try:
             technician_id = content['technician']
-            technician = Technician.objects.get(id=technician_id)
+            technician = Technician.objects.get(employee_number=technician_id)
             content['technician'] = technician
         except Technician.DoesNotExist:
             return JsonResponse(
                 {'message': 'Invalid technician ID'},
                 status=400
             )
-        print("vin content: ", content["vin"])
-        print("all the autos: ", AutoVO.objects.all())
         if AutoVO.objects.filter(vin=content['vin']):
             content['vip'] = True
         service = Service.objects.create(**content)

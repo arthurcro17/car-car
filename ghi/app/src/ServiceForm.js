@@ -19,6 +19,10 @@ class ServiceForm extends React.Component {
             time: '',
             technicians: [],
             reason: '',
+            message: '',
+            success: '',
+            form: 'shadow p-4 mt-4',
+            technician: '',
         };
         this.handleOwnerChange = this.handleOwnerChange.bind(this);
         this.handleVinChange = this.handleVinChange.bind(this);
@@ -27,12 +31,41 @@ class ServiceForm extends React.Component {
         this.handleTechnicianChange = this.handleTechnicianChange.bind(this);
         this.handleReasonChange = this.handleReasonChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.reset = this.reset.bind(this)
+    }
+
+    reset(event) {
+        event.preventDefault()
+        let today = new Date()
+        let yyyy = today.getFullYear()
+        let mm = today.getMonth()+1
+        let dd = today.getDate()
+        if (dd < 10) {dd = '0' + dd}
+        if (mm < 10) {mm = '0' + mm}
+        today = yyyy + '-' +  mm + '-' + dd
+        console.log(today)
+        const clear = {
+            owner: '',
+            vin: '',
+            date: today,
+            time: '',
+            reason: '',
+            technician: '',
+            message: '',
+            success: 'd-none',
+            form: 'shadow p-4 mt-4',
+        }
+        console.log('clear', clear)
+        this.setState(clear)
     }
 
     async handleSubmit(event) {
         event.preventDefault();
         const data = {...this.state}
         delete data.technicians;
+        delete data.message
+        delete data.success
+        delete data.form
         let year = data.date.slice(0,4)
         let month = data.date.slice(5,7)
         let day = data.date.slice(8-10)
@@ -41,6 +74,7 @@ class ServiceForm extends React.Component {
         let formated_date = new Date(Date.UTC(year, month, day, hour, minute))
         data['date'] = formated_date
         delete data.time
+        console.log(data)
         const servicesUrl = 'http://localhost:8080/api/services/'
         const fetchConfig = {
             method: "POST",
@@ -58,6 +92,9 @@ class ServiceForm extends React.Component {
                 date: '',
                 technician: '',
                 reason: '',
+                form: 'd-none',
+                message: `Service for ${data.vin} has been created`
+
             }
             this.setState(cleared);
         }
@@ -107,7 +144,13 @@ class ServiceForm extends React.Component {
         return (
             <div className="row">
                 <div className="offset-3 col-6">
-                    <div className="shadow p-4 mt-4">
+                    <div className={this.state.success}>
+                        <div className="alert alert-success mt-4" role="alert">
+                            {this.state.message}
+                            <button onClick={this.reset} className="btn btn-success">Create another technician</button>
+                        </div>
+                    </div>
+                    <div className={this.state.form}>
                         <h1>Create a Service Appointment</h1>
                         <form onSubmit={this.handleSubmit} id="create-service-form">
                         <div className="form-floating mb-3">
