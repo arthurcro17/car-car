@@ -12,6 +12,10 @@ class AutomobileForm extends React.Component {
             year: '',
             models: [],
             model_id: '',
+            message: '',
+            error: 'd-none',
+            success: 'd-none',
+            form: 'shadow p-4 mt-4'
 
         };
         this.handleVinChange = this.handleVinChange.bind(this);
@@ -19,12 +23,28 @@ class AutomobileForm extends React.Component {
         this.handleYearChange = this.handleYearChange.bind(this);
         this.handleModelChange = this.handleModelChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.reset = this.reset.bind(this)
+    }
+
+    reset(event) {
+        event.preventDefault()
+        const cleared = {
+            message: '',
+            error: 'd-none',
+            success: 'd-none',
+            form: 'shadow p-4 mt-4',
+        }
+        this.setState(cleared)
     }
 
     async handleSubmit(event) {
         event.preventDefault();
         const data = {...this.state}
         delete data.models
+        delete data.message
+        delete data.error
+        delete data.success
+        delete data.form
         const modelsUrl = 'http://localhost:8100/api/automobiles/'
         const fetchConfig = {
             method: "POST",
@@ -37,19 +57,26 @@ class AutomobileForm extends React.Component {
         if (response.ok) {
 
             const newServices = await response.json();
-            if (newServices['message'] === "Could not create the automobile") {
-                window.alert(`${this.state.vin} is already in the inventory`)
-                this.setState({vin: ''})
+
+            const cleared = {
+                vin: '',
+                color: '',
+                year: '',
+                model_id: '',
+                error: 'd-none',
+                form: 'd-none',
+                success: '',
+                message: `New Automobile created: ${this.state.vin}`
             }
-            else {
-                const cleared = {
-                    vin: '',
-                    color: '',
-                    year: '',
-                    manufacturer_id: '',
-                }
-                this.setState(cleared);
+            this.setState(cleared)
+        }
+        else {
+            const errorMessage = {
+                vin: '',
+                error: '',
+                message: `${this.state.vin} is already in the database`
             }
+            this.setState(errorMessage)
         }
     }
 
@@ -87,7 +114,18 @@ class AutomobileForm extends React.Component {
         return (
             <div className="row">
                 <div className="offset-3 col-6">
-                    <div className="shadow p-4 mt-4">
+                    <div className={this.state.success}>
+                        <div className="alert alert-success mt-4" role="alert">
+                            {this.state.message} <br />
+                            <button onClick={this.reset} className="btn btn-success">Create another automobile</button>
+                        </div>
+                    </div>
+                    <div className={this.state.error}>
+                        <div className="alert alert-danger mt-4" role="alert">
+                            {this.state.message}
+                        </div>
+                    </div>
+                    <div className={this.state.form}>
                         <h1>Create a new Automobile</h1>
                         <form onSubmit={this.handleSubmit} id="create-automobile-form">
                         <div className="form-floating mb-3">

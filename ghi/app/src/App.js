@@ -43,7 +43,7 @@ function App() {
             </Route>
           </Route>
           <Route path='inventory/'>
-            <Route path='' element={<InventoryMainPage />} />
+            {/* <Route path='' element={<InventoryMainPage />} /> */}
             <Route path='manufacturers'>
               <Route path=''  element={<ManufacturerListPage />} />
               <Route path='new'  element={<ManufacturerForm />} />

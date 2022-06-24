@@ -11,18 +11,41 @@ class ModelForm extends React.Component {
             picture_url: '',
             manufacturers: [],
             manufacturer_id: '',
+            message: '',
+            error: 'd-none',
+            success: 'd-none',
+            form: 'shadow p-4 mt-4',
 
         };
-        this.handleNameChange = this.handleNameChange.bind(this);
-        this.handlePictureUrlChange = this.handlePictureUrlChange.bind(this);
-        this.handleManufacturerChange = this.handleManufacturerChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleNameChange = this.handleNameChange.bind(this)
+        this.handlePictureUrlChange = this.handlePictureUrlChange.bind(this)
+        this.handleManufacturerChange = this.handleManufacturerChange.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
+        this.reset = this.reset.bind(this)
+    }
+
+    reset(event) {
+        event.preventDefault()
+        const cleared = {
+            name: '',
+            picture_url: '',
+            manufacturer_id: '',
+            message: '',
+            error: 'd-none',
+            success: 'd-none',
+            form: 'shadow p-4 mt-4',
+        }
+        this.setState(cleared)
     }
 
     async handleSubmit(event) {
         event.preventDefault();
         const data = {...this.state}
         delete data.manufacturers
+        delete data.message
+        delete data.error
+        delete data.success
+        delete data.form
         const modelsUrl = 'http://localhost:8100/api/models/'
         const fetchConfig = {
             method: "POST",
@@ -35,17 +58,24 @@ class ModelForm extends React.Component {
         if (response.ok) {
 
             const newServices = await response.json();
-            if (newServices['message'] === "Could not create the manufacturer") {
-                window.alert(`${this.state.name} is already in the inventory`)
-                this.setState({name: ''})
+
+            const cleared = {
+                name: '',
+                picture_url: '',
+                manufacturer_id: '',
+                success: '',
+                form: 'd-none',
+                error: 'd-none',
+                message: `New Model created: ${this.state.name}`
+
             }
-            else {
-                const cleared = {
-                    name: '',
-                    picture_url: '',
-                    manufacturer_id: '',
-                }
-                this.setState(cleared);
+            this.setState(cleared)
+        }
+        else {
+            const errorMessage = {
+                name: '',
+                error: '',
+                message: `${this.state.name} is already in the database`
             }
         }
     }
@@ -79,7 +109,18 @@ class ModelForm extends React.Component {
         return (
             <div className="row">
                 <div className="offset-3 col-6">
-                    <div className="shadow p-4 mt-4">
+                    <div className={this.state.success}>
+                        <div className="alert alert-success mt-4" role="alert">
+                            {this.state.message} <br />
+                            <button onClick={this.reset} className="btn btn-success">Create another model</button>
+                        </div>
+                    </div>
+                    <div className={this.state.error}>
+                        <div className="alert alert-danger mt-4" role="alert">
+                            {this.state.message}
+                        </div>
+                    </div>
+                    <div className={this.state.form}>
                         <h1>Create a new Model</h1>
                         <form onSubmit={this.handleSubmit} id="create-model-form">
                         <div className="form-floating mb-3">

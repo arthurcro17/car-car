@@ -55,7 +55,7 @@ class TechnicianForm extends React.Component {
             const newServices = await response.json();
 
             
-            const success = {
+            const successful = {
                 name: '',
                 employee_number: '',
                 success: '',
@@ -64,7 +64,7 @@ class TechnicianForm extends React.Component {
                 message: `Technician ${data.name}-${data.employee_number} has been successfully created`
         
             }
-            this.setState(success);
+            this.setState(successful);
             
         }
         else {
@@ -86,17 +86,6 @@ class TechnicianForm extends React.Component {
         const value = event.target.value;
         this.setState({employee_number: value});
     }
-
-
-    // async componentDidMount () {
-    //     const url = 'http://localhost:8080/api/services/technicians/';
-
-    //     const response = await fetch(url);
-    //     if (response.ok) {
-    //         const data = await response.json();
-    //         this.setState({technicians: data.technicians});
-    //     }
-    // }
 
     render() {
         return (
