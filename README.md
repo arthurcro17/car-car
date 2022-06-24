@@ -2,8 +2,8 @@
 
 Team:
 
-* Person 1 - Which microservice?
-* Person 2 - Which microservice?
+* Arthur - Services
+* Emily - Sales
 
 ## Design
 
@@ -14,5 +14,5 @@ microservice, here.
 
 ## Sales microservice
 
-Explain your models and integration with the inventory
-microservice, here.
+Sales has models for SalesPerson, Customer, SaleRecord, and AutomobileVO. AutomobileVO data 
+is populated with the get_autos function in sales/poll/poller.py.

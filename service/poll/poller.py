@@ -18,9 +18,8 @@ def get_autos():
     content = json.loads(response.content)
     for automobile in content['automobiles']:
         AutoVO.objects.update_or_create(
-            vin = automobile["vin"]
+            vin=automobile["vin"]
         )
-        
 
 def poll():
     while True:

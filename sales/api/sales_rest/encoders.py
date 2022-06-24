@@ -23,6 +23,7 @@ class CustomerEncoder(ModelEncoder):
     properties = [
         "name",
         "address",
+        "phone_number",
         "id",
     ]
 

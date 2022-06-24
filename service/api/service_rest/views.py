@@ -83,7 +83,8 @@ def api_list_services(request, vin=None):
                 {'message': 'Invalid technician ID'},
                 status=400
             )
- 
+        print("vin content: ", content["vin"])
+        print("all the autos: ", AutoVO.objects.all())
         if AutoVO.objects.filter(vin=content['vin']):
             content['vip'] = True
         service = Service.objects.create(**content)

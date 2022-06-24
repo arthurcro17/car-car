@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 
+
 # Create your models here.
 class SalesPerson(models.Model):
     name = models.CharField(max_length=100)
@@ -16,6 +17,7 @@ class SalesPerson(models.Model):
 class Customer(models.Model):
     name = models.CharField(max_length=100)
     address = models.CharField(max_length=300)
+    phone_number = models.CharField(max_length=10)
 
     def __str__(self):
         return self.name

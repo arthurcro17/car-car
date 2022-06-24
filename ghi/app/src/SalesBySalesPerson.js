@@ -82,7 +82,7 @@ class ListSalesBySalesPerson extends React.Component {
                                     return (
                                         <tr key={sale.id}>
                                             <td>{sale.automobile.vin}</td>
-                                            <td>$ {sale.sales_price}</td>
+                                            <td>$ { new Intl.NumberFormat().format(sale.sales_price) }</td>
                                             <td>{sale.sale_person.name}</td>
                                             <td>{sale.sale_person.employee_number}</td>
                                             <td>{sale.customer.name}</td>
@@ -94,7 +94,7 @@ class ListSalesBySalesPerson extends React.Component {
                                 return (
                                     <tr key={sale.id}>
                                         <td>{sale.automobile.vin}</td>
-                                        <td>$ {sale.sales_price}</td>
+                                        <td>$ { new Intl.NumberFormat().format(sale.sales_price) }</td>
                                         <td>{sale.sale_person.name}</td>
                                         <td>{sale.sale_person.employee_number}</td>
                                         <td>{sale.customer.name}</td>
@@ -104,7 +104,7 @@ class ListSalesBySalesPerson extends React.Component {
                         })}
                     </tbody>
                 </table>
-                <Link to="sales" className="btn btn-success btn-md">View all sales</Link>
+                <Link to="/sales/" className="btn btn-success btn-md">View all sales</Link>
             </>
         )
     }
