@@ -10,8 +10,6 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "service_project.settings")
 django.setup()
 
 from service_rest.models import AutoVO
-# Import models from service_rest, here.
-# from service_rest.models import Something
 
 def get_autos():
     response = requests.get("http://inventory-api:8000/api/automobiles/")
@@ -20,13 +18,11 @@ def get_autos():
         AutoVO.objects.update_or_create(
             vin=automobile["vin"]
         )
-        print("All Autos: ", AutoVO.objects.all())
 
 def poll():
     while True:
         print('Service poller polling for data')
         try:
-            # Write your polling logic, here
             get_autos()
             pass
         except Exception as e:
