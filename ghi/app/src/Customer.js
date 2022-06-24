@@ -36,7 +36,7 @@ class CustomerForm extends React.Component {
         };
         const response = await fetch(customerUrl, fetchConfig);
         if (response.ok) {
-            const newCustomer = await response.json();
+            const newCustomer = await response.json()
 
             const success = {
                 success: '',
