@@ -20,6 +20,7 @@ def get_autos():
         AutoVO.objects.update_or_create(
             vin=automobile["vin"]
         )
+        print("All Autos: ", AutoVO.objects.all())
 
 def poll():
     while True:

@@ -49,7 +49,6 @@ class SaleRecord extends React.Component {
         if (response.ok) {
             const newSaleRecord = await response.json();
 
-
             const car = document.getElementById("automobile");
             const success = {
                 success: '',
