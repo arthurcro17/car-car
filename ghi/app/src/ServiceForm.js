@@ -43,7 +43,6 @@ class ServiceForm extends React.Component {
         if (dd < 10) {dd = '0' + dd}
         if (mm < 10) {mm = '0' + mm}
         today = yyyy + '-' +  mm + '-' + dd
-        console.log(today)
         const clear = {
             owner: '',
             vin: '',
@@ -55,7 +54,6 @@ class ServiceForm extends React.Component {
             success: 'd-none',
             form: 'shadow p-4 mt-4',
         }
-        console.log('clear', clear)
         this.setState(clear)
     }
 
@@ -74,7 +72,6 @@ class ServiceForm extends React.Component {
         let formated_date = new Date(Date.UTC(year, month, day, hour, minute))
         data['date'] = formated_date
         delete data.time
-        console.log(data)
         const servicesUrl = 'http://localhost:8080/api/services/'
         const fetchConfig = {
             method: "POST",

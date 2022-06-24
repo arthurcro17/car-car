@@ -37,7 +37,6 @@ class SaleRecord extends React.Component {
         delete data.message;
         delete data.success;
         delete data.autoName;
-        //console.log("check submit data: ", data);
         const saleRecordUrl = 'http://localhost:8090/api/salerecord/'
         const fetchConfig = {
             method: "POST",
@@ -52,7 +51,6 @@ class SaleRecord extends React.Component {
 
 
             const car = document.getElementById("automobile");
-            console.log("checking car: ", car);
             const success = {
                 success: '',
                 form: 'd-none',

@@ -25,7 +25,6 @@ class SalesPersonForm extends React.Component {
         delete data.error;
         delete data.message;
         delete data.success;
-        console.log("check submit data: ", data)
         const salesUrl = 'http://localhost:8090/api/salespeople/';
         const fetchConfig = {
             method: "POST",
@@ -37,8 +36,6 @@ class SalesPersonForm extends React.Component {
         const response = await fetch(salesUrl, fetchConfig);
         if (response.ok) {
             const newCustomer = await response.json();
-            console.log(newCustomer);
-
             const success = {
                 success: '',
                 form: 'd-none',
@@ -60,8 +57,6 @@ class SalesPersonForm extends React.Component {
             }
 
             this.setState(errorMessage);
-            console.log("what is happening")
-            console.log(this.state)
         }
     }
 

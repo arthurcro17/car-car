@@ -26,7 +26,6 @@ class CustomerForm extends React.Component {
         delete data.form;
         delete data.message;
         delete data.success;
-        console.log("check submit data: ", data)
         const customerUrl = 'http://localhost:8090/api/customer/';
         const fetchConfig = {
             method: "POST",
